@@ -2,7 +2,7 @@
   "name": "ecommerce",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://wafaa-assem.github.io/Reactproj",
+  "homepage": "https://wafaa-assem.github.io/ecommerce",
   "type": "module",
   "scripts": {
    "predeploy": "npm run build",
