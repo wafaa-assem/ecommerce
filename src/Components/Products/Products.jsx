@@ -28,7 +28,7 @@ export default function Products() {
     return axios.get("https://ecommerce.routemisr.com/api/v1/products");
   }
 
-  const { data, isLoading, isFetched, isFetching, refetch } = useQuery({
+  const { data, isLoading,  refetch } = useQuery({
     queryKey: "allProducts",
     queryFn: getAllProducts,
     // refetchOnMount: false,

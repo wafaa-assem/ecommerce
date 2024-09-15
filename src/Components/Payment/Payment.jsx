@@ -47,7 +47,7 @@ function detectSubmitState(values){
                 token:localStorage.getItem('tkn')
             },
             params:{
-                url: 'http://localhost:3000'
+                url: window.location.origin
             }
         }).then(({data})=>{
             console.log('online ok',data);

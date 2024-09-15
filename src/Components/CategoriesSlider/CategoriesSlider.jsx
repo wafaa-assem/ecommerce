@@ -1,82 +1,78 @@
-import axios, { all } from "axios";
-import { useEffect, useState } from "react";
-import React from "react";
 import { FallingLines } from "react-loader-spinner";
-import { useQuery } from "react-query";
 import Slider from "react-slick";
 import useCategory from "../../CustomHooks/useCategory";
 
 export default function CategoriesSlider() {
-  // const [allCategory, seAllCategory] = useState(null);
-  var settings = {
-    dots: true,
+  // Slider settings with breakpoints for responsiveness
+  const settings = {
+    dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 10,
-    slidesToScroll: 5,
+    slidesToShow: 5, // Default for larger screens
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 1024, // `lg` screens
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 3,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 768, // `md` screens
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 2,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 640, // `sm` screens
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480, // Smaller screens
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
-  // function getCategoriesData() {
-  //   axios
-  //     .get("https://ecommerce.routemisr.com/api/v1/categories")
-  //     .then(({ data }) => {
-  //       // console.log("sa7", data.data);
-  //       seAllCategory(data.data);
-  //     })
-  //     .catch((param) => {
-  //       // console.log("ghalat", param);
-  //     });
-  // }
+  const { data, isLoading } = useCategory();
 
-  // useEffect(() => {
-  //   getCategoriesData();
-  // }, []);
-
-//   function getAllCategories(){
-//     return axios.get('https://ecommerce.routemisr.com/api/v1/categories');
-//   }
-
-
-// const {data , isLoading} = useQuery({
-//     queryKey: 'allCategories',
-//     queryFn: getAllCategories,
-//   });
-
-const {data , isLoading}= useCategory();
-// console.log(res);
-
-
-  if(isLoading){
-    return <>
-    
-    <FallingLines
-      color="green"
-      width="100"
-      visible={true}
-      ariaLabel="falling-circles-loading"
-    />
-
-  </>
+  if (isLoading) {
+    return (
+      <>
+        <FallingLines
+          color="green"
+          width="100"
+          visible={true}
+          ariaLabel="falling-circles-loading"
+        />
+      </>
+    );
   }
-  return  <>
-       
-    <Slider {...settings} className="px-5 my-5">
-      
-      {data.data.data.map((category) => {
-        return (
+
+  return (
+    <>
+      <Slider {...settings} className="px-5 my-5">
+        {data.data.data.map((category) => (
           <div key={category._id}>
             <img
               src={category.image}
-              className="w-full h-28"
+              className="w-full h-40 "
               alt={category.name}
             />
-            <h5 className="font-semibold">{category.name}</h5>
+            <h5 className="font-semibold text-center">{category.name}</h5>
           </div>
-        );
-      })}
-
-    </Slider>
-  
-</>
- 
+        ))}
+      </Slider>
+    </>
+  );
 }
